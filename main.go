@@ -25,11 +25,9 @@ func main() {
 		return
 	}
 
-	fmt.Println(*urlToRequestPtr)
+	fmt.Println("historical URL was", *urlToRequestPtr)
 
 	cdxFormattedUrl := fmt.Sprintf("https://web.archive.org/cdx/search/cdx?url=%s&output=json&limit=-1&fl=timestamp", *urlToRequestPtr)
-
-	fmt.Println(cdxFormattedUrl)
 
 	resp, err := http.Get(cdxFormattedUrl)
 	if err != nil {
@@ -58,6 +56,8 @@ func main() {
 	}
 
 	fullArchiveUrl := "https://web.archive.org/web/" + timestampString + "id_/" + *urlToRequestPtr
+
+	fmt.Println("requesting original image from", fullArchiveUrl)
 
 	lastSlashIndex := strings.LastIndex(*urlToRequestPtr, "/")
 	if lastSlashIndex == -1 {
@@ -88,5 +88,5 @@ func main() {
 		fmt.Println("Error copying body to file:", err)
 		return
 	}
-	fmt.Println(filename)
+	fmt.Println("File saved as:", filename)
 }
